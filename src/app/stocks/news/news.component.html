@@ -1,0 +1,10 @@
+<div>
+  <ul style="list-style:none;">
+    <li *ngFor="let d of data">
+      <a href="{{d.url}}">{{d.headline}}</a>
+      <p>Source: {{d.source}}</p>
+      <span>Published on: {{d.datetime}}</span>
+      <img src="{{d.image}}" />
+    </li>
+  </ul>
+</div>

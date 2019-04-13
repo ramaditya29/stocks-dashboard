@@ -1,12 +1,8 @@
-import { BrowserModule , Title} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { StocksDetailComponent } from './stocks-detail/stocks-detail.component';
+import { StockHomeComponent } from './stock-home/stock-home.component';
+import { RouterModule} from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule, MatCard } from '@angular/material/card';
@@ -15,23 +11,25 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { CovalentCommonModule } from '@covalent/core/common';
 import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentMediaModule } from '@covalent/core/media';
 import { CovalentLoadingModule } from '@covalent/core/loading';
-import { CovalentHttpModule } from '@covalent/http';
+import { CovalentHttpModule, TdHttpService } from '@covalent/http';
 import { CovalentHighlightModule } from '@covalent/highlight';
+import { CovalentChipsModule } from '@covalent/core/chips';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
-import { StocksModule } from './stocks/stocks.module';
+import { CovalentBaseEchartsModule } from '@covalent/echarts/base';
+import { CovalentBarEchartsModule } from '@covalent/echarts/bar';
+import { CovalentTooltipEchartsModule } from '@covalent/echarts/tooltip';
+import { CompanyInfoComponent } from './company-info/company-info.component';
+import { NewsComponent } from './news/news.component';
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [StocksDetailComponent, StockHomeComponent, CompanyInfoComponent, NewsComponent],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
+    CommonModule,
+    RouterModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -39,16 +37,18 @@ import { StocksModule } from './stocks/stocks.module';
     MatDividerModule,
     MatInputModule,
     MatToolbarModule,
+    MatGridListModule,
     CovalentCommonModule,
+    CovalentChipsModule,
     CovalentLayoutModule,
     CovalentMediaModule,
     CovalentLoadingModule,
     CovalentHttpModule,
     CovalentHighlightModule,
     CovalentDynamicFormsModule,
-    StocksModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    CovalentBaseEchartsModule,
+    CovalentBarEchartsModule,
+    CovalentTooltipEchartsModule
+  ]
 })
-export class AppModule { }
+export class StocksModule { }

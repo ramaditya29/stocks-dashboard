@@ -1,0 +1,22 @@
+<div>
+  {{companySummary | json}}
+    <mat-grid-list cols="6" rowHeight="50px">
+        <mat-grid-tile
+            *ngFor="let tile of tiles"
+            [colspan]="tile.cols"
+            [rowspan]="tile.rows"
+            >
+            <dl>
+                <dt>
+                  <span>{{tile.header | uppercase}}</span>
+                </dt>
+                <dd class="quote-title">
+                  <span *ngIf="tile.type === 'text'">{{companySummary[tile.value] }}</span>
+                  <span *ngIf="tile.type === 'number'">{{companySummary[tile.value] | number}}</span> 
+                  <a href="{{companySummary[tile.value]}}" *ngIf="tile.type === 'url'">{{companySummary[tile.value]}}</a>
+                </dd>
+            </dl>
+          </mat-grid-tile>
+      </mat-grid-list>
+
+</div>

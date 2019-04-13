@@ -1,0 +1,110 @@
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+    <div flex-gt-sm="60">
+        <mat-card>
+          <mat-card-title>{{stockInfo.latestPrice | currency}} <span class="stock-changeper">{{stockInfo.change | currency}}</span> <span class="stock-changeper">({{stockInfo.changePer | percent}})</span></mat-card-title>
+          <mat-card-subtitle>{{stockInfo.companyName}} ({{stockInfo.stockSymbol | uppercase}})</mat-card-subtitle>
+          <mat-card-subtitle>{{stockInfo.latestTime}}</mat-card-subtitle>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+              <td-chart [style.height.px]="300">
+                  <td-chart-tooltip [trigger]="'item'"
+                                    [textStyle]="{ color: '#818181' }"
+                                    [backgroundColor]="'#ffffff'">
+                    <ng-template let-params let-ticket="ticket" tdTooltipFormatter>
+                      <ng-container *ngIf="params">
+                        <div layout="row" layout-align="start center">
+                          <mat-icon>
+                            <span>people</span>
+                          </mat-icon>
+                          <span class="mat-caption pad-left-sm">
+                            Test
+                          </span>
+                        </div>
+                      </ng-container>
+                    </ng-template>
+                  </td-chart-tooltip>
+                  <td-chart-x-axis [show]="true"
+                                    [position]="'bottom'"
+                                    [type]="'category'"
+                                    [data]="['Electronics', 'Toys', 'Grocery', 'Appliances', 'Automotive', 'Sports']"
+                                    [boundaryGap]="true">
+                  </td-chart-x-axis>
+                  <td-chart-y-axis [show]="true"
+                                    [type]="'value'"
+                                    [position]="'right'"
+                                    [max]="200">
+                  </td-chart-y-axis>
+                  <td-chart-series td-bar
+                                  [data]="[150, 130, 150, 120, 150, 120]"
+                                  [name]="'Today'"
+                                  [color]="'#F2724B'">
+                  </td-chart-series>
+                </td-chart>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-title>{{stockInfo.companyName}}</mat-card-title>
+            <mat-card-subtitle>{{companyInfo?.description}}</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <company-info [companySummary]="companyInfo"></company-info>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+                Tags<td-chips 
+                  color="ascent"
+                  [disabled]="true"
+                  [(ngModel)]="stockCategoryTiles"
+                  [disabled]="disabled"
+                  >
+                </td-chips>
+            </mat-card-actions>
+          </mat-card>
+        
+          <mat-card>
+              <mat-card-title>News</mat-card-title>
+              <mat-card-subtitle>Recent activity from select members</mat-card-subtitle>
+              <mat-divider></mat-divider>
+              <mat-card-content>
+                <news [data]="stockNews"></news>
+              </mat-card-content>
+          </mat-card>
+      </div>
+      <div flex-gt-sm="40">
+          <mat-card>
+              <mat-card-title>Stock Profile</mat-card-title>
+              <mat-card-subtitle>Recent activity from select members</mat-card-subtitle>
+              <mat-divider></mat-divider>
+              <mat-card-content>
+                  <mat-grid-list cols="6" rowHeight="50px">
+                      <mat-grid-tile
+                          *ngFor="let tile of tiles"
+                          [colspan]="tile.cols"
+                          [rowspan]="tile.rows"
+                          >
+                          <dl>
+                              <dt>
+                                <span>{{tile.header}}</span>
+                              </dt>
+                              <dd class="quote-title">
+                                Test
+                              </dd>
+                          </dl>
+                      </mat-grid-tile>
+                    </mat-grid-list>
+              </mat-card-content>
+          </mat-card>
+          
+          <mat-card>
+            <mat-card-title>Favorites</mat-card-title>
+            <mat-card-subtitle>Your favorite products</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              card content
+            </mat-card-content>
+            <mat-card-actions>
+             
+            </mat-card-actions>
+          </mat-card>
+        </div>
+</div>
