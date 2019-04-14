@@ -1,135 +1,47 @@
 <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
-    <div flex-gt-sm="33">
+    <div flex-gt-sm="33" *ngFor="let market of marketsQuotesChartData;">
         <mat-card>
-          <mat-card-title>Test <span class="stock-changeper"></span> <span class="stock-changeper"></span></mat-card-title>
-          <mat-card-subtitle>hello</mat-card-subtitle>
-          <mat-card-subtitle>Test</mat-card-subtitle>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-              <td-chart [style.height.px]="300">
-                  <td-chart-tooltip [trigger]="'item'"
-                                    [textStyle]="{ color: '#818181' }"
-                                    [backgroundColor]="'#ffffff'">
-                    <ng-template let-params let-ticket="ticket" tdTooltipFormatter>
-                      <ng-container *ngIf="params">
-                        <div layout="row" layout-align="start center">
-                          <mat-icon>
-                            <span>people</span>
-                          </mat-icon>
-                          <span class="mat-caption pad-left-sm">
-                            Test
-                          </span>
-                        </div>
-                      </ng-container>
-                    </ng-template>
-                  </td-chart-tooltip>
-                  <td-chart-x-axis [show]="true"
-                                    [position]="'bottom'"
-                                    [type]="'category'"
-                                    [data]="['Electronics', 'Toys', 'Grocery', 'Appliances', 'Automotive', 'Sports']"
-                                    [boundaryGap]="true">
-                  </td-chart-x-axis>
-                  <td-chart-y-axis [show]="true"
-                                    [type]="'value'"
-                                    [position]="'right'"
-                                    [max]="200">
-                  </td-chart-y-axis>
-                  <td-chart-series td-bar
-                                  [data]="[150, 130, 150, 120, 150, 120]"
-                                  [name]="'Today'"
-                                  [color]="'#F2724B'">
-                  </td-chart-series>
-                </td-chart>
-          </mat-card-content>
-        </mat-card>
-    </div>
-    <div flex-gt-sm="33">
-        <mat-card>
-          <mat-card-title>Test <span class="stock-changeper"></span> <span class="stock-changeper"></span></mat-card-title>
-          <mat-card-subtitle>hello</mat-card-subtitle>
-          <mat-card-subtitle>Test</mat-card-subtitle>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-              <td-chart [style.height.px]="300">
-                  <td-chart-tooltip [trigger]="'item'"
-                                    [textStyle]="{ color: '#818181' }"
-                                    [backgroundColor]="'#ffffff'">
-                    <ng-template let-params let-ticket="ticket" tdTooltipFormatter>
-                      <ng-container *ngIf="params">
-                        <div layout="row" layout-align="start center">
-                          <mat-icon>
-                            <span>people</span>
-                          </mat-icon>
-                          <span class="mat-caption pad-left-sm">
-                            Test
-                          </span>
-                        </div>
-                      </ng-container>
-                    </ng-template>
-                  </td-chart-tooltip>
-                  <td-chart-x-axis [show]="true"
-                                    [position]="'bottom'"
-                                    [type]="'category'"
-                                    [data]="['Electronics', 'Toys', 'Grocery', 'Appliances', 'Automotive', 'Sports']"
-                                    [boundaryGap]="true">
-                  </td-chart-x-axis>
-                  <td-chart-y-axis [show]="true"
-                                    [type]="'value'"
-                                    [position]="'right'"
-                                    [max]="200">
-                  </td-chart-y-axis>
-                  <td-chart-series td-bar
-                                  [data]="[150, 130, 150, 120, 150, 120]"
-                                  [name]="'Today'"
-                                  [color]="'#F2724B'">
-                  </td-chart-series>
-                </td-chart>
-          </mat-card-content>
-        </mat-card>
-    </div>
-    <div flex-gt-sm="33">
-        <mat-card>
-          <mat-card-title>Test <span class="stock-changeper"></span> <span class="stock-changeper"></span></mat-card-title>
-          <mat-card-subtitle>hello</mat-card-subtitle>
-          <mat-card-subtitle>Test</mat-card-subtitle>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-              <td-chart [style.height.px]="300">
-                  <td-chart-tooltip [trigger]="'item'"
-                                    [textStyle]="{ color: '#818181' }"
-                                    [backgroundColor]="'#ffffff'">
-                    <ng-template let-params let-ticket="ticket" tdTooltipFormatter>
-                      <ng-container *ngIf="params">
-                        <div layout="row" layout-align="start center">
-                          <mat-icon>
-                            <span>people</span>
-                          </mat-icon>
-                          <span class="mat-caption pad-left-sm">
-                            Test
-                          </span>
-                        </div>
-                      </ng-container>
-                    </ng-template>
-                  </td-chart-tooltip>
-                  <td-chart-x-axis [show]="true"
-                                    [position]="'bottom'"
-                                    [type]="'category'"
-                                    [data]="['Electronics', 'Toys', 'Grocery', 'Appliances', 'Automotive', 'Sports']"
-                                    [boundaryGap]="true">
-                  </td-chart-x-axis>
-                  <td-chart-y-axis [show]="true"
-                                    [type]="'value'"
-                                    [position]="'right'"
-                                    [max]="200">
-                  </td-chart-y-axis>
-                  <td-chart-series td-bar
-                                  [data]="[150, 130, 150, 120, 150, 120]"
-                                  [name]="'Today'"
-                                  [color]="'#F2724B'">
-                  </td-chart-series>
-                </td-chart>
-          </mat-card-content>
-        </mat-card>
+            <mat-card-title>{{market.quote.latestPrice | currency}}<span class="stock-changeper">{{market.quote.change | currency}}</span> <span class="stock-changeper">({{market.quote.changePercent | percent}})</span></mat-card-title>
+            <mat-card-subtitle>{{market.quote.companyName}} <span class="symbol" (click)="openStockDetailView(market.quote.symbol)">({{ market.quote.symbol}})</span></mat-card-subtitle>
+            <mat-card-subtitle>{{market.quote.latestTime}}</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <td-chart [style.height.px]="300">
+                    <td-chart-tooltip [trigger]="'item'"
+                                      [textStyle]="{ color: '#818181' }"
+                                      [backgroundColor]="'#ffffff'">
+                      <ng-template let-params let-ticket="ticket" tdTooltipFormatter>
+                        <ng-container *ngIf="params">
+                          <div layout="row" layout-align="start center">
+                            <mat-icon>
+                              <span>people</span>
+                            </mat-icon>
+                            <span class="mat-caption pad-left-sm">
+                              Test
+                            </span>
+                          </div>
+                        </ng-container>
+                      </ng-template>
+                    </td-chart-tooltip>
+                    <td-chart-x-axis [show]="true"
+                                      [position]="'bottom'"
+                                      [type]="'category'"
+                                      [data]="['Electronics', 'Toys', 'Grocery', 'Appliances', 'Automotive', 'Sports']"
+                                      [boundaryGap]="true">
+                    </td-chart-x-axis>
+                    <td-chart-y-axis [show]="true"
+                                      [type]="'value'"
+                                      [position]="'right'"
+                                      [max]="200">
+                    </td-chart-y-axis>
+                    <td-chart-series td-bar
+                                    [data]="[150, 130, 150, 120, 150, 120]"
+                                    [name]="'Today'"
+                                    [color]="'#F2724B'">
+                    </td-chart-series>
+                  </td-chart>
+            </mat-card-content>
+          </mat-card>
     </div>
 </div>
 <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
@@ -138,14 +50,27 @@
             <mat-card-title>Sector Performance</mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-content>
-              <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>
+              <div class="sector-container">
+                  
+  
+                      <div class="sector">x
+                        
+                      </div>
+                      <div class="sector">x</div>
+                      <div class="sector">x</div>
+                      <div class="sector">x</div>
+                      <div class="sector">x</div>
+                      <div class="sector">x</div>
+                      <div class="sector">x</div>
+                      <div class="sector">x</div>
+              </div>
             </mat-card-content>
         </mat-card>
         <mat-card>
             <mat-card-title>General News</mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-content>
-              <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>
+              
             </mat-card-content>
             <mat-divider></mat-divider>
             <mat-card-actions>
@@ -158,7 +83,7 @@
                   <mat-card-title>Top Losers</mat-card-title>
                   <mat-divider></mat-divider>
                   <mat-card-content>
-                    <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>
+                    <stock-listing-table [tableData]="marketLosers"></stock-listing-table>
                   </mat-card-content>
               </mat-card>
           </div>
@@ -167,7 +92,7 @@
                   <mat-card-title>Top Gainers</mat-card-title>
                   <mat-divider></mat-divider>
                   <mat-card-content>
-                    <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>
+                    <stock-listing-table [tableData]="marketGainers"></stock-listing-table>
                   </mat-card-content>
               </mat-card>
           </div>
@@ -192,6 +117,12 @@
             <mat-card-content>
               <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>
             </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <a mat-button>
+                Add Stock to Watch List
+              </a>
+            </mat-card-actions>
           </mat-card>
         
     </div>

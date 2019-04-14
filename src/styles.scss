@@ -7,3 +7,25 @@
 .quote-title{
     margin-inline-start:0px !important;
 }
+
+.symbol{
+    color: blue;
+    cursor:pointer;
+    &:hover{
+        decoration: underline;
+    }
+}
+
+.sector-cotainer{
+    display: flex;
+    flex-flow: row wrap;
+    .sector {
+        background: red !important;
+       /* background: white;*/
+    margin: 10px;
+    height: 100px;
+    width: calc( (100% / 3) - 20px );
+    padding: 10px;
+    
+    }
+}

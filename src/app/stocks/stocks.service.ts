@@ -20,12 +20,28 @@ export class StocksService {
 
   }
 
-  handleGet(url: string, queryParams: string){
-    let newUrl = `${this.apiUrl}${url}?token=${this.token}${queryParams}`;
+  handleGet(url: string, queryParams?: string, ignoreUrl?: boolean){
+    let newUrl = '';
+    if(ignoreUrl)
+      newUrl = `${url}`;
+    else   
+      newUrl = `${this.apiUrl}${url}?token=${this.token}${queryParams}`;
     return this.http.get(newUrl);
   }
 
   handlePost(){
 
+  }
+
+
+  parseMultiStockJSON(data){
+    let stocks = Object.keys(data);
+    let similarStcks = [];
+    for(let item in stocks){
+      let {companyName, symbol, latestPrice, changePercent} = data[stocks[item]];
+      similarStcks.push({companyName, symbol, latestPrice, changePercent});
+    }
+    console.log("The similarStcks array is:" , similarStcks);
+    return similarStcks;
   }
 }
