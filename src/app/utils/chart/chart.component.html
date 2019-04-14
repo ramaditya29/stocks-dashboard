@@ -1,0 +1,13 @@
+<td-chart  [style.height.px]="300">
+    <td-chart-x-axis [show]="true"
+                      [type]="'time'">
+    </td-chart-x-axis>
+    <td-chart-y-axis [show]="true"
+                      [type]="'value'">
+    </td-chart-y-axis>
+    <td-chart-series td-line [id]="config.series[0].name"
+                [name]="config.series[0].name"
+                [data]="config.series[0].data"
+                [color]="'#F2724B'">
+    </td-chart-series>
+  </td-chart>

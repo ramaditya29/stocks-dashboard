@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StocksService } from '../stocks.service';
 import { TouchSequence } from 'selenium-webdriver';
 import { Router } from '@angular/router';
+import { CovalentHighlightModule } from '@covalent/highlight';
 
 @Component({
   selector: 'app-stock-home',
@@ -15,13 +16,48 @@ export class StockHomeComponent implements OnInit {
   marketsQuotesChartData: any[] = [];
   marketLosers: any[] = [];
   marketGainers: any[] = [];
-
+  sectorsInfo:Object[] = [];
+  config = {
+    "xAxis": [
+      {
+        "show": true,
+        "type": "time",
+        "boundaryGap": false
+      }
+    ],
+    "yAxis": [
+      {
+        "show": false,
+        "type": "value",
+        "axisLabel": {
+          "inside": true
+        }
+      }
+    ],
+    "series": [
+      {
+        "name": "Revenue",
+        "type": "line",
+        "itemStyle": {
+          "opacity": 0.95,
+          "color": "#007373"
+        },
+        "data": []
+      }
+    ],
+    "tooltip": {
+      "show": true,
+      "trigger": "axis",
+      "showContent": true
+    }
+  }
   constructor(private stockService: StocksService, private router: Router) { }
   
   ngOnInit() {
     this.getMarketCharts();
     this.getMarketGainers();
     this.getMarketLosers();
+    this.getSectorsInfo();
   }
 
 
@@ -34,7 +70,8 @@ export class StockHomeComponent implements OnInit {
          let marketsData = [];
          for(let item in this.markets){
            let {quote, chart} = res[this.markets[item]];
-           marketsData.push({quote, chart});
+           let charts = this.buildChartData(this.config, chart,  quote.symbol);
+           marketsData.push({quote, charts});
          }
          console.log("The final data is:" , marketsData);
          this.marketsQuotesChartData = marketsData;
@@ -67,5 +104,33 @@ export class StockHomeComponent implements OnInit {
 
   openStockDetailView(stockSymbol){
     this.router.navigate(['/stock', stockSymbol.toLowerCase()]);
+  }
+
+
+  buildChartData(cfg , data, symbol): object{
+    console.log("Entered");
+    let config = cfg;
+    config.series[0].name = symbol;
+    let seriesData = [];
+    for(let idx in data){
+      seriesData.push({
+        name: data[idx].date,
+        value: [new Date(data[idx].date), data[idx].close]
+      })
+    }
+    config.series[0].data = seriesData;
+   
+    return config;
+  }
+
+  getSectorsInfo(){
+    let url = `/stock/market/sector-performance`;
+    this.stockService.handleGet(url, '')
+      .subscribe(res => {
+        console.log("The response is:" , res);
+        this.sectorsInfo = this.sectorsInfo.concat(res);
+      }, err => {
+        console.log("The error is:" , err);
+      })
   }
 }

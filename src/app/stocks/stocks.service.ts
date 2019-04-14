@@ -41,7 +41,6 @@ export class StocksService {
       let {companyName, symbol, latestPrice, changePercent} = data[stocks[item]];
       similarStcks.push({companyName, symbol, latestPrice, changePercent});
     }
-    console.log("The similarStcks array is:" , similarStcks);
     return similarStcks;
   }
 }

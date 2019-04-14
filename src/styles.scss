@@ -19,7 +19,7 @@
 .sector-cotainer{
     display: flex;
     flex-flow: row wrap;
-    .sector {
+    &.sector {
         background: red !important;
        /* background: white;*/
     margin: 10px;
@@ -29,3 +29,29 @@
     
     }
 }
+
+
+.tiles {
+  
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    .tile {
+      background: #c9d4e5;
+      margin: 10px;
+      height: 100px;
+      width: calc( (100% / 3.5) - 20px );
+      padding: 10px;
+      .percent{
+        margin-top:40px;
+        text-align:right;
+        padding:20px;
+      }
+      &:last-child{
+          width: calc( (100% / 2.6) - 20px );
+      }
+      &:nth-last-child(2){
+          width: calc((100% / 2) - 20px);
+      }
+    }
+}  

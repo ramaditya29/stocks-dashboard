@@ -23,6 +23,7 @@ import { CovalentHttpModule } from '@covalent/http';
 import { CovalentHighlightModule } from '@covalent/highlight';
 import { CovalentDynamicFormsModule } from '@covalent/dynamic-forms';
 import { StocksModule } from './stocks/stocks.module';
+import { UtilsModule } from './utils/utils.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -46,7 +47,8 @@ import { StocksModule } from './stocks/stocks.module';
     CovalentHttpModule,
     CovalentHighlightModule,
     CovalentDynamicFormsModule,
-    StocksModule
+    StocksModule, 
+    UtilsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
