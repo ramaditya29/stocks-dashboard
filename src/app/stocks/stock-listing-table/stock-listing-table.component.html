@@ -1,0 +1,32 @@
+
+  <table td-data-table>
+      <thead>
+        <tr td-data-table-column-row>
+          <th td-data-table-column
+              *ngFor="let column of columns"
+              [numeric]="column.numeric">
+            {{column.label}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr td-data-table-row *ngFor="let row of gridData">
+          <td td-data-table-cell *ngFor="let column of columns">
+            <span *ngIf="column.type === 'number'">
+              {{row[column.name] | currency }}
+              <!--{{column.format ? column.format(row[column.name]) : row[column.name]}}-->
+            </span>
+            <span *ngIf="column.type === 'percent'">
+              {{row[column.name] | percent}}
+            </span>
+            <a href="javascript:void(0);" (click)="openStockInfo(column, row)" *ngIf="column.type === 'url'">
+              {{row[column.name]}}
+            </a>
+
+            <span *ngIf="column.type === 'text'">
+              {{row[column.name]}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>

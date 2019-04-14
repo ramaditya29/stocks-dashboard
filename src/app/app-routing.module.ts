@@ -13,10 +13,6 @@ const routes: Routes = [
     component: StocksDetailComponent
   },
   {
-    path: 'test/:stockid',
-    component: StocksDetailComponent
-  },
-  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'

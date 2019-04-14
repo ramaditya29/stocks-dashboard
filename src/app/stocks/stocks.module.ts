@@ -24,9 +24,12 @@ import { CovalentBaseEchartsModule } from '@covalent/echarts/base';
 import { CovalentBarEchartsModule } from '@covalent/echarts/bar';
 import { CovalentTooltipEchartsModule } from '@covalent/echarts/tooltip';
 import { CompanyInfoComponent } from './company-info/company-info.component';
+import { CovalentDataTableModule } from '@covalent/core/data-table';
 import { NewsComponent } from './news/news.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { StockListingTableComponent } from './stock-listing-table/stock-listing-table.component';
 @NgModule({
-  declarations: [StocksDetailComponent, StockHomeComponent, CompanyInfoComponent, NewsComponent],
+  declarations: [StocksDetailComponent, StockHomeComponent, CompanyInfoComponent, NewsComponent, CompanyProfileComponent, StockListingTableComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -48,7 +51,8 @@ import { NewsComponent } from './news/news.component';
     CovalentDynamicFormsModule,
     CovalentBaseEchartsModule,
     CovalentBarEchartsModule,
-    CovalentTooltipEchartsModule
+    CovalentTooltipEchartsModule,
+    CovalentDataTableModule
   ]
 })
 export class StocksModule { }

@@ -31,17 +31,21 @@ export class StocksDetailComponent implements OnInit {
     {header: 'Three', cols: 2, rows: 1, value: ''},
     {header: 'Four', cols: 2, rows: 1, value: ''},
   ];
+  similarStocksInfo: any[];
+  similarStocks : string[] = ['fb', 'aapl', 'goog', 'amzn', 'bac', 'nflx', 'lyft'];
   constructor(private http:HttpClient, private router: ActivatedRoute, private stockService: StocksService) { }
 
   ngOnInit() {
      this.router.params.subscribe(params => {
        this.stockSymbol = params['stockid'];
        console.log('the stock symbol is:' , this.stockSymbol); 
+       
        this.stockInfo.stockSymbol = params['stockid']; 
        this.getStockQuote(this.stockSymbol);
        this.getStockNews(this.stockSymbol);
        this.getChartData(this.stockSymbol);
        this.getCompanyInfo(this.stockSymbol);
+       this.getSimilarStockQuotes(this.stockSymbol);
      })
      
   }
@@ -52,6 +56,7 @@ export class StocksDetailComponent implements OnInit {
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
         console.log("The response is:" , res);
+        this.stockQuote = res.quote;
         let {companyName, latestPrice, latestTime, change, changePercent } = res.quote;
         this.stockInfo.companyName = companyName;
         this.stockInfo.latestPrice = latestPrice;
@@ -64,6 +69,27 @@ export class StocksDetailComponent implements OnInit {
         console.log("Error in loading the data");
       })
 
+  }
+
+  getSimilarStockQuotes(stockSymbol){
+    this.similarStocks.splice( 0,this.similarStocks.indexOf(this.stockSymbol) + 1);
+    console.log("The similar stocks list: " , this.similarStocks.join(","));
+    //https://cloud.iexapis.com/beta/stock/market/batch?symbols=aapl,fb&types=quote&token=pk_f4c21a8f6ff14f00bd3230bb3ec066a3
+    let url = '/stock/market/batch';
+    let queryParams = `&symbols=${this.similarStocks.join(",")}&types=quote`;
+    this.stockService.handleGet(url, queryParams)
+      .subscribe(res => {
+        let stocks = Object.keys(res);
+        let similarStcks = [];
+        for(let item in stocks){
+          let {companyName, symbol, latestPrice, changePercent} = res[stocks[item]].quote;
+          similarStcks.push({companyName, symbol, latestPrice, changePercent});
+        }
+        console.log("The similarStcks array is:" , similarStcks);
+        this.similarStocksInfo = similarStcks;
+      }, err => {
+        console.log("Error occured");
+      })
   }
 
   getStockNews(stockSymbol: string){
