@@ -31,15 +31,19 @@ export class StocksDetailComponent implements OnInit {
     {header: 'Three', cols: 2, rows: 1, value: ''},
     {header: 'Four', cols: 2, rows: 1, value: ''},
   ];
+  watchListFlag: boolean = false;
   similarStocksInfo: any[];
   similarStocks : string[] = ['fb', 'aapl', 'goog', 'amzn', 'bac', 'nflx', 'lyft'];
+  watchListSymbols = [];
   constructor(private http:HttpClient, private router: ActivatedRoute, private stockService: StocksService) { }
 
   ngOnInit() {
+     this.watchListSymbols = window.sessionStorage.getItem('watchList') ? JSON.parse(window.sessionStorage.getItem('watchList')) : [];
      this.router.params.subscribe(params => {
        this.stockSymbol = params['stockid'];
-       console.log('the stock symbol is:' , this.stockSymbol); 
-       
+       if(this.watchListSymbols.indexOf(this.stockSymbol.toLowerCase()) > -1){
+          this.watchListFlag = true;
+       }
        this.stockInfo.stockSymbol = params['stockid']; 
        this.getStockQuote(this.stockSymbol);
        this.getStockNews(this.stockSymbol);
@@ -137,4 +141,17 @@ export class StocksDetailComponent implements OnInit {
       })
   }
 
+  toggleWatchList(symbol, operation){
+    let watchListItems = window.sessionStorage.getItem('watchList') ? JSON.parse(window.sessionStorage.getItem('watchList')) : [];
+    symbol = symbol.toLowerCase();
+   if(operation === 'add'){
+     this.watchListFlag = true;
+     watchListItems.push(symbol);
+   } else {
+     this.watchListFlag = false;
+     watchListItems.splice(0, watchListItems.indexOf(symbol) + 1);
+     
+   }
+   window.sessionStorage.setItem('watchList', JSON.stringify(watchListItems));
+  }
 }

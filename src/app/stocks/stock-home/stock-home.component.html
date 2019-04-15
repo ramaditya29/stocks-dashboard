@@ -19,9 +19,9 @@
             <mat-card-content>
               <div class="tiles">
                 <div class="tile" *ngFor="let sector of sectorsInfo">
-                  {{sector.name}}
+                  <span class="name">{{sector.name}}</span>
                   <div class="percent">
-                    {{sector.performance | percent}}    
+                    <span [ngClass]="{'red-bgb-color' : sector.performance < 0 , 'green-bgb-color': sector.performance >= 0}">{{sector.performance | percent}}</span>
                   </div>
                 </div>
               </div>
@@ -39,40 +39,42 @@
               <button mat-raised-button color="accent" (click)="addNewPost()">Add New Post</button>
             </mat-card-actions>
         </mat-card>
-        <div layout-gt-sm="row">
-          <div flex-gt-sm="50">
-              <mat-card>
-                  <mat-card-title>Top Losers</mat-card-title>
-                  <mat-divider></mat-divider>
-                  <mat-card-content>
-                    <stock-listing-table [tableData]="marketLosers"></stock-listing-table>
-                  </mat-card-content>
-              </mat-card>
-          </div>
-          <div flex-gt-sm="50">
-              <mat-card>
-                  <mat-card-title>Top Gainers</mat-card-title>
-                  <mat-divider></mat-divider>
-                  <mat-card-content>
-                    <stock-listing-table [tableData]="marketGainers"></stock-listing-table>
-                  </mat-card-content>
-              </mat-card>
-          </div>
-        </div>
-        
-        
-        
-        
+        <mat-card>
+          <mat-card-content>
+              <mat-tab-group>
+                  <mat-tab label="Top Gainers">  
+                      <stock-listing-table [tableData]="marketGainers | slice:0:10"></stock-listing-table>
+                  </mat-tab>
+                  <mat-tab label="Top Losers"> 
+                      <stock-listing-table [tableData]="marketLosers | slice:0:10"></stock-listing-table>  
+                  </mat-tab>
+              </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
     </div>
     <div flex-gt-sm="40">
-        <mat-card>
-            <mat-card-title>People also brought</mat-card-title>
-            <mat-divider></mat-divider>
-            <mat-card-content>
-              
-            </mat-card-content>
-          </mat-card>
-       
+        <div layout-gt-sm="row">
+            <div flex-gt-sm="50">
+                <mat-card>
+                    <mat-card-title>Bull of the Day</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                      <h3 class="blue-color" (click)="openStockDetailView('KSS')">Kohl's Corporation(KSS)</h3>
+                      <p>Innovative strategies are keeping this retailer out front, even in an increasingly digital environment</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div flex-gt-sm="50">
+                <mat-card>
+                    <mat-card-title>Bear of the Day</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                      <h3 class="blue-color" (click)="openStockDetailView('SHOP')">Shopify</h3>
+                      <p>Despite a novel approach to making e-tailing accessible to small players, recent ...</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div> 
         <mat-card>
             <mat-card-title>My Watch List</mat-card-title>
             <mat-divider></mat-divider>

@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+$green-color: green;
+$red-color: red;
+$blue-color: blue;
+$light-blue-color: #29b6f6;
 .stock-changeper{
     font-size: 16px;
     font-weight: normal;
@@ -9,7 +13,7 @@
 }
 
 .symbol{
-    color: blue;
+    color: $blue-color;
     cursor:pointer;
     &:hover{
         decoration: underline;
@@ -30,6 +34,20 @@
     }
 }
 
+.green-bgb-color{
+    background: $green-color;
+    border-color: $green-color !important;
+}
+
+.red-bgb-color {
+    background: $red-color;
+    border-color: $red-color !important;
+}
+
+.blue-color{
+    color: $blue-color;
+    cursor:pointer;
+}
 
 .tiles {
   
@@ -42,10 +60,19 @@
       height: 100px;
       width: calc( (100% / 3.5) - 20px );
       padding: 10px;
+      .name {
+          font-size: 16px;
+      }
+
       .percent{
         margin-top:40px;
         text-align:right;
-        padding:20px;
+        padding:16px;
+        span{
+            border: 1px solid;
+            color: white;
+            padding: 4px;
+        }
       }
       &:last-child{
           width: calc( (100% / 2.6) - 20px );
@@ -56,27 +83,12 @@
     }
 }  
 
-
-
-
-.analysis-container {
-    display: flex;
-    flex-direction: column;
-    & > * {
-        width: 100%;
-    }
-}
-
-
-.example-full-width {
+.input-full-width {
     width: 100%;
 }
 
 .form-container{
     display:flex;
     flex-direction: column;
-    .mat-form-field-wrapper{
-        width:1000px !important
-    }
 }
   

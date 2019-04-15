@@ -1,7 +1,20 @@
 <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
     <div flex-gt-sm="60">
         <mat-card>
-          <mat-card-title>{{stockInfo.latestPrice | currency}} <span class="stock-changeper">{{stockInfo.change | currency}}</span> <span class="stock-changeper">({{stockInfo.changePer | percent}})</span></mat-card-title>
+          <mat-card-title>
+            {{stockInfo.latestPrice | currency}} 
+            <span class="stock-changeper">{{stockInfo.change | currency}}</span> 
+            <span class="stock-changeper">({{stockInfo.changePer | percent}})</span>
+            <span style="float: right;">
+              <span  *ngIf="!watchListFlag" class="blue-color" (click)="toggleWatchList(stockInfo.stockSymbol, 'add')">
+                <mat-icon>star_border</mat-icon>
+              </span>
+              <span *ngIf="watchListFlag" class="blue-color" (click)="toggleWatchList(stockInfo.stockSymbol, 'remove')">
+                <mat-icon>star</mat-icon>
+              </span>
+
+            </span>
+          </mat-card-title>
           <mat-card-subtitle>{{stockInfo.companyName}} ({{stockInfo.stockSymbol | uppercase}})</mat-card-subtitle>
           <mat-card-subtitle>{{stockInfo.latestTime}}</mat-card-subtitle>
           <mat-divider></mat-divider>

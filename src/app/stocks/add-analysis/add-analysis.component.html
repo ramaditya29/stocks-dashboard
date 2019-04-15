@@ -6,45 +6,45 @@
             <mat-step [stepControl]="firstFormGroup">
               <form [formGroup]="firstFormGroup" class="full-width" #stepOneForm="ngForm">
                 <ng-template matStepLabel>Post Information</ng-template>
-                <div class="test">
-                <div>
-                <mat-form-field  class="example-full-width">
-                  <input matInput placeholder="Title"  formControlName="title" required>
-                </mat-form-field>
-                </div>
-                <div>
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Subtitle"  formControlName="subtitle">
-                </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Reference"  formControlName="ref">
+                <div >
+                  <div>
+                    <mat-form-field  class="input-full-width">
+                      <input matInput placeholder="Title"  formControlName="title" required>
                     </mat-form-field>
-                    </div>
-                <div>
-                <mat-form-field style="width:600px !important">
-                    <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="postedDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                      <input matInput  placeholder="Image URL" formControlName="imageurl">
+                  </div>
+                  <div>
+                    <mat-form-field class="input-full-width">
+                      <input matInput placeholder="Subtitle"  formControlName="subtitle">
                     </mat-form-field>
-                    </div>
-                </div>
-                <div>
-                  <mat-form-field class="example-full-width">
-                    <mat-label>Source</mat-label>
-                    <mat-select formControlName="source" required>
-                      <mat-option *ngFor="let item of items" [value]="item">
-                        {{item}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
+                  </div>
+                  <div>
+                      <mat-form-field class="input-full-width">
+                        <input matInput placeholder="Reference"  formControlName="ref">
+                      </mat-form-field>
+                  </div>
+                  <div>
+                    <mat-form-field style="width:600px !important">
+                      <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="postedDate">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                      <mat-form-field class="input-full-width">
+                        <input matInput  placeholder="Image URL" formControlName="imageurl">
+                      </mat-form-field>
+                      </div>
+                  </div>
+                  <div>
+                    <mat-form-field class="input-full-width">
+                      <mat-label>Source</mat-label>
+                      <mat-select formControlName="source" required>
+                        <mat-option *ngFor="let item of items" [value]="item">
+                          {{item}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
                 
                 
                 <div>
@@ -57,11 +57,11 @@
               <form [formGroup]="secondFormGroup" #stepTwoForm="ngForm">
                 <ng-template matStepLabel>Post Description</ng-template>
                   
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="input-full-width">
                     <input matInput placeholder="Author"  formControlName="author" required>
                   </mat-form-field>
                   
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="input-full-width">
                     <textarea matInput placeholder="Description" rows="10" cols="40" formControlName="description"></textarea>
                   </mat-form-field>
                 <div>
