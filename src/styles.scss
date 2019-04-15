@@ -55,3 +55,28 @@
       }
     }
 }  
+
+
+
+
+.analysis-container {
+    display: flex;
+    flex-direction: column;
+    & > * {
+        width: 100%;
+    }
+}
+
+
+.example-full-width {
+    width: 100%;
+}
+
+.form-container{
+    display:flex;
+    flex-direction: column;
+    .mat-form-field-wrapper{
+        width:1000px !important
+    }
+}
+  

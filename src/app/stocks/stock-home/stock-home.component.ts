@@ -17,40 +17,6 @@ export class StockHomeComponent implements OnInit {
   marketLosers: any[] = [];
   marketGainers: any[] = [];
   sectorsInfo:Object[] = [];
-  config = {
-    "xAxis": [
-      {
-        "show": true,
-        "type": "time",
-        "boundaryGap": false
-      }
-    ],
-    "yAxis": [
-      {
-        "show": false,
-        "type": "value",
-        "axisLabel": {
-          "inside": true
-        }
-      }
-    ],
-    "series": [
-      {
-        "name": "Revenue",
-        "type": "line",
-        "itemStyle": {
-          "opacity": 0.95,
-          "color": "#007373"
-        },
-        "data": []
-      }
-    ],
-    "tooltip": {
-      "show": true,
-      "trigger": "axis",
-      "showContent": true
-    }
-  }
   constructor(private stockService: StocksService, private router: Router) { }
   
   ngOnInit() {
@@ -68,13 +34,17 @@ export class StockHomeComponent implements OnInit {
       .subscribe(res => {
          console.log("The resp is:" , res);
          let marketsData = [];
+         let temp = [];
          for(let item in this.markets){
            let {quote, chart} = res[this.markets[item]];
-           let charts = this.buildChartData(this.config, chart,  quote.symbol);
+           let charts = this.stockService.buildChartData( chart,  quote.symbol);
+           console.log("the charts is:" , charts);
            marketsData.push({quote, charts});
+            temp.push({charts});
          }
          console.log("The final data is:" , marketsData);
          this.marketsQuotesChartData = marketsData;
+         
       }, err => {
         console.log("Error occured");
       })
@@ -107,9 +77,42 @@ export class StockHomeComponent implements OnInit {
   }
 
 
-  buildChartData(cfg , data, symbol): object{
+  buildChartData(data, symbol): object{
     console.log("Entered");
-    let config = cfg;
+    let config = {
+      "xAxis": [
+        {
+          "show": true,
+          "type": "time",
+          "boundaryGap": false
+        }
+      ],
+      "yAxis": [
+        {
+          "show": false,
+          "type": "value",
+          "axisLabel": {
+            "inside": true
+          }
+        }
+      ],
+      "series": [
+        {
+          "name": "",
+          "type": "line",
+          "itemStyle": {
+            "opacity": 0.95,
+            "color": "#007373"
+          },
+          "data": []
+        }
+      ],
+      "tooltip": {
+        "show": true,
+        "trigger": "axis",
+        "showContent": true
+      }
+    };
     config.series[0].name = symbol;
     let seriesData = [];
     for(let idx in data){
@@ -132,5 +135,9 @@ export class StockHomeComponent implements OnInit {
       }, err => {
         console.log("The error is:" , err);
       })
+  }
+
+  addNewPost(){
+    this.router.navigate(['/stock/addAnalysis']);
   }
 }

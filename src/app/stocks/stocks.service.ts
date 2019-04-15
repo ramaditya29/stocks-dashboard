@@ -43,4 +43,54 @@ export class StocksService {
     }
     return similarStcks;
   }
+
+
+  buildChartData(data, symbol): object{
+    console.log("Entered");
+    let config = {
+      "xAxis": [
+        {
+          "show": true,
+          "type": "time",
+          "boundaryGap": false
+        }
+      ],
+      "yAxis": [
+        {
+          "show": false,
+          "type": "value",
+          "axisLabel": {
+            "inside": true
+          }
+        }
+      ],
+      "series": [
+        {
+          "name": "",
+          "type": "line",
+          "itemStyle": {
+            "opacity": 0.95,
+            "color": "#007373"
+          },
+          "data": []
+        }
+      ],
+      "tooltip": {
+        "show": true,
+        "trigger": "axis",
+        "showContent": true
+      }
+    };
+    config.series[0].name = symbol;
+    let seriesData = [];
+    for(let idx in data){
+      seriesData.push({
+        name: data[idx].date,
+        value: [new Date(data[idx].date), data[idx].close]
+      })
+    }
+    config.series[0].data = seriesData;
+   
+    return config;
+  }
 }

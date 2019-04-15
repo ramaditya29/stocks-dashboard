@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { TdHttpService } from '@covalent/http';
 import { StocksService } from '../stocks.service';
 
 @Component({
@@ -16,6 +15,7 @@ export class StocksDetailComponent implements OnInit {
   stockQuote: any;
   stockCategoryTiles;
   stockNews: any = [];
+  stockChartConfig = {};
   stockInfo: { stockSymbol: string, companyName: string, latestPrice: any , change: any, changePer: any, latestTime: string , companyDescription: string} = {
     stockSymbol: '',
     companyName: '',
@@ -72,11 +72,12 @@ export class StocksDetailComponent implements OnInit {
   }
 
   getSimilarStockQuotes(stockSymbol){
-    this.similarStocks.splice( 0,this.similarStocks.indexOf(this.stockSymbol) + 1);
-    console.log("The similar stocks list: " , this.similarStocks.join(","));
+    let similarStocks = this.similarStocks;
+    similarStocks.splice( 0, similarStocks.indexOf(this.stockSymbol) + 1);
+    console.log("The similar stocks list: " , similarStocks.join(","));
     //https://cloud.iexapis.com/beta/stock/market/batch?symbols=aapl,fb&types=quote&token=pk_f4c21a8f6ff14f00bd3230bb3ec066a3
     let url = '/stock/market/batch';
-    let queryParams = `&symbols=${this.similarStocks.join(",")}&types=quote`;
+    let queryParams = `&symbols=${similarStocks.join(",")}&types=quote`;
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
         let stocks = Object.keys(res);
@@ -112,6 +113,9 @@ export class StocksDetailComponent implements OnInit {
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
         console.log("The response is:" , res);
+        let chartConfig = this.stockService.buildChartData( res.chart,  this.stockSymbol);
+        this.stockChartConfig = chartConfig;
+        console.log(this.stockChartConfig);
       }, 
       err => {
         console.log("Error in loading the data");

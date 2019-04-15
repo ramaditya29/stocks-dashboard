@@ -6,8 +6,7 @@
             <mat-card-subtitle>{{market.quote.latestTime}}</mat-card-subtitle>
             <mat-divider></mat-divider>
             <mat-card-content>
-                <!--chart [id]="market.quote.symbol" [chartConfig]="market.charts"></chart-->
-                
+                <chart [id]="market.quote.symbol" [chartConfig]="market.charts"></chart>
             </mat-card-content>
           </mat-card>
     </div>
@@ -25,36 +24,19 @@
                     {{sector.performance | percent}}    
                   </div>
                 </div>
-                <!--div class="tile">
-                    Test
-
-                </div>
-                <div class="tile">
-                    Test
-                </div>
-
-                <div class="tile">
-                    Test
-                </div>
-                <div class="tile">
-                      Test
-                </div>
-                <div class="tile">
-                    Test
-                </div-->
               </div>
               
             </mat-card-content>
         </mat-card>
         <mat-card>
-            <mat-card-title>General News</mat-card-title>
+            <mat-card-title>My Posts Feed</mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-content>
               
             </mat-card-content>
             <mat-divider></mat-divider>
             <mat-card-actions>
-              
+              <button mat-raised-button color="accent" (click)="addNewPost()">Add New Post</button>
             </mat-card-actions>
         </mat-card>
         <div layout-gt-sm="row">
