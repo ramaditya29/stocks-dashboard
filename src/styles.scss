@@ -33,7 +33,9 @@ $light-blue-color: #29b6f6;
     
     }
 }
-
+.white-color{
+    color: white;
+}
 .green-bgb-color{
     background: $green-color;
     border-color: $green-color !important;
@@ -91,4 +93,38 @@ $light-blue-color: #29b6f6;
     display:flex;
     flex-direction: column;
 }
-  
+
+.info-container{
+    display: flex;
+    flex-direction: row;
+    .info-tile{
+        width: 30%;
+    }
+}
+.float-right{
+    float: right;
+}
+
+.padding8{
+    padding: 8px;
+}
+.padding16{
+    padding:16px;
+}
+.font20{
+    font-size: 20px;
+}
+.feed-container-box{
+    height:140px;
+    border: 1px solid #ececec;
+    margin-bottom:5px;
+    .feed-container{
+        display:flex;
+        flex-wrap: row wrap;
+        justify-content: space-around;
+        .feed-content{
+            padding:10px;
+            
+        }
+    }
+}

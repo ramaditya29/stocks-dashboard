@@ -13,4 +13,8 @@ export class NewsComponent implements OnInit {
   ngOnInit() {
   }
 
+  openNewsFeed(url){
+    window.location.href = url;
+  }
+
 }

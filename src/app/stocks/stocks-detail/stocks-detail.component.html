@@ -6,10 +6,10 @@
             <span class="stock-changeper">{{stockInfo.change | currency}}</span> 
             <span class="stock-changeper">({{stockInfo.changePer | percent}})</span>
             <span style="float: right;">
-              <span  *ngIf="!watchListFlag" class="blue-color" (click)="toggleWatchList(stockInfo.stockSymbol, 'add')">
+              <span  *ngIf="!watchListFlag" class="blue-color" title="Add to watchlist" (click)="toggleWatchList(stockInfo.stockSymbol, 'add')">
                 <mat-icon>star_border</mat-icon>
               </span>
-              <span *ngIf="watchListFlag" class="blue-color" (click)="toggleWatchList(stockInfo.stockSymbol, 'remove')">
+              <span *ngIf="watchListFlag" title="Remove from watchlist" class="blue-color" (click)="toggleWatchList(stockInfo.stockSymbol, 'remove')">
                 <mat-icon>star</mat-icon>
               </span>
 
@@ -27,7 +27,7 @@
             <mat-card-subtitle>{{companyInfo?.description}}</mat-card-subtitle>
             <mat-divider></mat-divider>
             <mat-card-content>
-              <company-info [companySummary]="companyInfo"></company-info>
+                <company-profile [profile]="stockQuote"></company-profile>
             </mat-card-content>
             <mat-divider></mat-divider>
             <mat-card-actions>
@@ -43,7 +43,7 @@
         
           <mat-card>
               <mat-card-title>News</mat-card-title>
-              <mat-card-subtitle>Recent activity from select members</mat-card-subtitle>
+              <mat-card-subtitle>Recent news related to {{stockInfo.stockSymbol | uppercase}}</mat-card-subtitle>
               <mat-divider></mat-divider>
               <mat-card-content>
                 <news [data]="stockNews"></news>
@@ -52,16 +52,17 @@
       </div>
       <div flex-gt-sm="40">
           <mat-card>
-              <mat-card-title>Stock Profile</mat-card-title>
-              <mat-card-subtitle>Recent activity from select members</mat-card-subtitle>
+              <mat-card-title>Company Info</mat-card-title>
+              
               <mat-divider></mat-divider>
               <mat-card-content>
-                  <company-profile [profile]="companyInfo"></company-profile>
+                  
+                  <company-info [companySummary]="companyInfo"></company-info>
               </mat-card-content>
           </mat-card>
           
           <mat-card>
-            <mat-card-title>People also brought</mat-card-title>
+            <mat-card-title>People also bought</mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-content>
               <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>

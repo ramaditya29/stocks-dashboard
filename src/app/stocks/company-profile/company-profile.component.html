@@ -1,21 +1,137 @@
 <div>
-    <mat-grid-list cols="6" rowHeight="50px">
-        <mat-grid-tile
-            *ngFor="let tile of tiles"
-            [colspan]="tile.cols"
-            [rowspan]="tile.rows"
-            >
-            <dl>
-                <dt>
-                  <span>{{tile.header | uppercase}}</span>
-                </dt>
-                <dd class="quote-title">
-                  <span *ngIf="tile.type === 'text'">{{profile[tile.value] }}</span>
-                  <span *ngIf="tile.type === 'number'">{{profile[tile.value] | number}}</span> 
-                  <a href="{{profile[tile.value]}}" *ngIf="tile.type === 'url'">{{profile[tile.value]}}</a>
-                </dd>
-            </dl>
-          </mat-grid-tile>
-      </mat-grid-list>
+    <table td-data-table>
+        <thead>
+        </thead>
+        <tbody>
+          <tr td-data-table-row>
+            <td td-data-table-cell>
+              <b>Symbol:</b>
+            </td>
+            <td td-data-table-cell>
+              {{profile?.symbol}}
+            </td>
+            <td td-data-table-cell>
+              <b>Latest Price:</b>
+            </td>
+            <td td-data-table-cell>
+              {{profile?.latestPrice}}
+            </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Open Time:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.openTime | date}}
+              </td>
+              <td td-data-table-cell>
+                <b>Close Time:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.closeTime | date}}
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Close:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.close | currency}}
+              </td>
+              <td td-data-table-cell>
+                <b>Open:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.open | currency}}
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Low:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.low | currency}}
+              </td>
+              <td td-data-table-cell>
+                <b>Close:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.close | currency}}
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Latest Time:</b>
+              </td>
+              <td td-data-table-cell>
+                {{ profile?.latestTime}}
+              </td>
+              <td td-data-table-cell>
+                <b>Latest Volume:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.latestVolume | number}}
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Change:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.change}}%
+              </td>
+              <td td-data-table-cell>
+                <b>Change Percent:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.changePercent}}%
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Market Cap:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.marketCap | number}}
+              </td>
+              <td td-data-table-cell>
+                <b>PE Ratio:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.peRatio}}
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Week52 High:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.week52High | currency}}
+              </td>
+              <td td-data-table-cell>
+                <b>Week52 Low:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.week52Low | currency}}
+              </td>
+          </tr>
+          <tr td-data-table-row>
+              <td td-data-table-cell>
+                <b>Avg Total Volume:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.avgTotalVolume | number }}
+              </td>
+              <td td-data-table-cell>
+                <b>YTD Change:</b>
+              </td>
+              <td td-data-table-cell>
+                {{profile?.ytdChange}}%
+              </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    
 
 </div>

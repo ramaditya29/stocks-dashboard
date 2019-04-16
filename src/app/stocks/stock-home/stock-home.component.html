@@ -1,7 +1,7 @@
 <div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
     <div flex-gt-sm="33" *ngFor="let market of marketsQuotesChartData;let i = index;">
         <mat-card>
-            <mat-card-title>{{market.quote.latestPrice | currency}}<span class="stock-changeper">{{market.quote.change | currency}}</span> <span class="stock-changeper">({{market.quote.changePercent | percent}})</span></mat-card-title>
+            <mat-card-title>{{market.quote.latestPrice | currency}}<span class="stock-changeper">{{market.quote.change | currency}}</span> <span class="stock-changeper" >({{market.quote.changePercent }}%)</span></mat-card-title>
             <mat-card-subtitle>{{market.quote.companyName}} <span class="symbol" (click)="openStockDetailView(market.quote.symbol)">({{ market.quote.symbol}})</span></mat-card-subtitle>
             <mat-card-subtitle>{{market.quote.latestTime}}</mat-card-subtitle>
             <mat-divider></mat-divider>
@@ -21,7 +21,7 @@
                 <div class="tile" *ngFor="let sector of sectorsInfo">
                   <span class="name">{{sector.name}}</span>
                   <div class="percent">
-                    <span [ngClass]="{'red-bgb-color' : sector.performance < 0 , 'green-bgb-color': sector.performance >= 0}">{{sector.performance | percent}}</span>
+                    <span [ngClass]="{'red-bgb-color' : sector.performance < 0 , 'green-bgb-color': sector.performance >= 0}">{{sector.performance}}%</span>
                   </div>
                 </div>
               </div>
@@ -32,6 +32,22 @@
             <mat-card-title>My Posts Feed</mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-content>
+              <div *ngFor="let feed of newsFeeds;" class="feed-container-box">
+                <div class="feed-container">
+                  <div>
+                    <img src="{{feed.imageurl}}" height="140"  width="200">
+                  </div>
+                  <div class="feed-content">
+                      <span class="blue-color font20" (click)="openNewsFeed(news.url)">{{feed.title}}</span>
+                      <!--span>{{feed.subTitle}}</span-->
+                      <span class="padding8" style="display:block;"><i>Source:</i>{{feed.source}} <span class="float-right">{{feed.postedDate  | date}}</span></span>
+                      
+                      <!--span><span>Created by:</span>{{feed.author}}</span-->
+                      <p>{{feed.description | slice:0:100}}...</p>
+                  </div>
+                </div>
+                 
+              </div>
               
             </mat-card-content>
             <mat-divider></mat-divider>
@@ -79,7 +95,7 @@
             <mat-card-title>My Watch List</mat-card-title>
             <mat-divider></mat-divider>
             <mat-card-content>
-              <stock-listing-table [tableData]="similarStocksInfo"></stock-listing-table>
+                <stock-listing-table [tableData]="watchListEntries | slice:0:10"></stock-listing-table>
             </mat-card-content>
             <mat-divider></mat-divider>
             <mat-card-actions>
