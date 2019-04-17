@@ -72,7 +72,7 @@ export class StocksDetailComponent implements OnInit {
 
   getSimilarStockQuotes(stockSymbol){
     let similarStocks = this.similarStocks;
-    similarStocks.splice( 0, similarStocks.indexOf(this.stockSymbol) + 1);
+    //similarStocks.splice( 0, similarStocks.indexOf(this.stockSymbol) + 1);
     let url = '/stock/market/batch';
     let queryParams = `&symbols=${similarStocks.join(",")}&types=quote`;
     this.stockService.handleGet(url, queryParams)
