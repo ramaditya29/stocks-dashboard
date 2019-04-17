@@ -50,8 +50,8 @@ export class StocksDetailComponent implements OnInit {
     let queryParams = "&types=quote&range=1m&last=20";
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-        this.stockQuote = res.quote;
-        let {companyName, latestPrice, latestTime, change, changePercent } = res.quote;
+        this.stockQuote = res['quote'];
+        let {companyName, latestPrice, latestTime, change, changePercent } = res['quote'];
         this.stockInfo.companyName = companyName;
         this.stockInfo.latestPrice = latestPrice;
         this.stockInfo.latestTime = latestTime;
@@ -94,7 +94,7 @@ export class StocksDetailComponent implements OnInit {
     let queryParams = "&types=news&range=1m&last=5";
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-        this.stockNews = res.news;
+        this.stockNews = res['news'];
       }, 
       err => {
         console.log("Error in loading the data");
@@ -107,7 +107,7 @@ export class StocksDetailComponent implements OnInit {
     let queryParams = "&types=chart&range=1m&last=20";
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-        let chartConfig = this.stockService.buildChartData( res.chart,  this.stockSymbol);
+        let chartConfig = this.stockService.buildChartData( res['chart'],  this.stockSymbol);
         this.stockChartConfig = chartConfig;
         console.log(this.stockChartConfig);
       }, 
@@ -122,7 +122,7 @@ export class StocksDetailComponent implements OnInit {
     this.stockService.handleGet(url, '')
       .subscribe(res => {
           this.companyInfo = res;
-          this.stockCategoryTiles = res.tags;
+          this.stockCategoryTiles = res['tags'];
       }, 
       err => {
         console.log("Error in loading the data");

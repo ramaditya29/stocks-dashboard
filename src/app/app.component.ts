@@ -17,14 +17,17 @@ export class AppComponent {
   autoCompleteStockItems: StockItem[] = [];
 
   constructor(private router: Router, private dataservice: LoadDataService) {
-    if(window.sessionStorage.getItem('watchList')){
+    //Initially adding feeds to the Feeds section for home page
+    if(window.sessionStorage.getItem('watchList') == null){
       dataservice.loadWatchListItems();
     }
-
-    if(window.sessionStorage.getItem('posts')){
+    //Initially loading some entries into Watch list section
+    if(window.sessionStorage.getItem('posts') == null){
       dataservice.loadNewsFeedItems();
     }
+    //Getting stock values from the data service
     this.autoCompleteStockItems = this.dataservice.getAutoCompleteItems();
+    //Adding Observable to top search bar
     this.filteredStocks = this.stockCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -38,7 +41,7 @@ export class AppComponent {
     return this.autoCompleteStockItems.filter(stock => stock.companyName.toLowerCase().indexOf(filterValue) === 0);
   }
   
-
+  //Event that triggers when we select an item from the Auto Complete list
   openStockDetailsPage(symbol: string){
     this.router.navigate(['/stock', symbol.toLowerCase()]);
   }
