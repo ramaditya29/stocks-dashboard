@@ -11,15 +11,20 @@ import { LoadDataService } from './utils/load-data.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'stocks-dashboard';
-  searchInputTerm: string = '';
   stockCtrl = new FormControl();
   showSearchBar : boolean = false;
   filteredStocks: Observable<StockItem[]>;
   autoCompleteStockItems: StockItem[] = [];
 
   constructor(private router: Router, private dataservice: LoadDataService) {
-    this.autoCompleteStockItems = dataservice.getAutoCompleteItems();
+    if(window.sessionStorage.getItem('watchList')){
+      dataservice.loadWatchListItems();
+    }
+
+    if(window.sessionStorage.getItem('posts')){
+      dataservice.loadNewsFeedItems();
+    }
+    this.autoCompleteStockItems = this.dataservice.getAutoCompleteItems();
     this.filteredStocks = this.stockCtrl.valueChanges
       .pipe(
         startWith(''),

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { StockHomeComponent } from './stocks/stock-home/stock-home.component';
 import { StocksDetailComponent } from './stocks/stocks-detail/stocks-detail.component';
 import { AddAnalysisComponent } from './stocks/add-analysis/add-analysis.component';
+import { ErrorComponent } from './error/error.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { 
@@ -18,9 +20,17 @@ const routes: Routes = [
     component: StocksDetailComponent
   },
   {
+    path: 'error',
+    component: ErrorComponent
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
   }
 ];
 

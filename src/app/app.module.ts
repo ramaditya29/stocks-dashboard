@@ -24,9 +24,13 @@ import { CovalentHttpModule } from '@covalent/http';
 import { CovalentSearchModule } from '@covalent/core/search';
 import { StocksModule } from './stocks/stocks.module';
 import { UtilsModule } from './utils/utils.module';
+import { ErrorComponent } from './error/error.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

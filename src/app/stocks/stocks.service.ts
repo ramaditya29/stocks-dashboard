@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,15 +11,6 @@ export class StocksService {
   constructor(private http: HttpClient) { }
 
 
-  makeApiCall(method, url, body? , headers?){
-    let newUrl = `${this.apiUrl}${url}?token=${this.token}`;
-    switch(method){
-      case 'GET': return this.http.get(newUrl).map(res =>  res.json());
-                  
-      case 'POST': return this.http.post(newUrl, body);
-    }              
-
-  }
 
   handleGet(url: string, queryParams?: string, ignoreUrl?: boolean){
     let newUrl = '';
@@ -46,7 +38,6 @@ export class StocksService {
 
 
   buildChartData(data, symbol): object{
-    console.log("Entered");
     let config = {
       "xAxis": [
         {
@@ -81,12 +72,13 @@ export class StocksService {
         "showContent": true
       }
     };
-    config.series[0].name = symbol;
+    config.series[0].name = symbol.toUpperCase();
     let seriesData = [];
     for(let idx in data){
+      let ndate = data[idx].date.split("-").join("/");
       seriesData.push({
         name: data[idx].date,
-        value: [new Date(data[idx].date), data[idx].close]
+        value: [new Date(ndate), data[idx].close]
       })
     }
     config.series[0].data = seriesData;

@@ -7,7 +7,7 @@
         <div class="feed-content">
             <span class="blue-color font20" (click)="openNewsFeed(news.url)">{{news.headline}}</span>
             <!--span>{{feed.subTitle}}</span-->
-            <span class="padding8" style="display:block;"><i>Source:</i>{{news.source}}  <span class="float-right">{{news.datetime  | date}}</span></span>
+            <span class="padding8" style="display:block;"><i>Source:</i>{{news.source}}  <span class="float-right">{{news.datetime  | timeAgo}}</span></span>
             <p>{{news.summary | slice: 0:100}}...</p>
         </div>
       </div>

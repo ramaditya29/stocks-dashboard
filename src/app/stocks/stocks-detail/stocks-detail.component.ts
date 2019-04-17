@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StocksService } from '../stocks.service';
 
 @Component({
@@ -25,17 +25,11 @@ export class StocksDetailComponent implements OnInit {
     latestTime: '',
     companyDescription: ''
   };
-  tiles = [
-    {header: 'One', cols: 2, rows: 1, value: ''},
-    {header: 'Two', cols: 2, rows: 1, value: ''},
-    {header: 'Three', cols: 2, rows: 1, value: ''},
-    {header: 'Four', cols: 2, rows: 1, value: ''},
-  ];
   watchListFlag: boolean = false;
   similarStocksInfo: any[];
   similarStocks : string[] = ['fb', 'aapl', 'goog', 'amzn', 'bac', 'nflx', 'lyft'];
   watchListSymbols = [];
-  constructor(private http:HttpClient, private router: ActivatedRoute, private stockService: StocksService) { }
+  constructor(private http:HttpClient, private router: ActivatedRoute, private stockService: StocksService, private route : Router) { }
 
   ngOnInit() {
      this.watchListSymbols = window.sessionStorage.getItem('watchList') ? JSON.parse(window.sessionStorage.getItem('watchList')) : [];
@@ -46,10 +40,7 @@ export class StocksDetailComponent implements OnInit {
        }
        this.stockInfo.stockSymbol = params['stockid']; 
        this.getStockQuote(this.stockSymbol);
-       this.getStockNews(this.stockSymbol);
-       this.getChartData(this.stockSymbol);
-       this.getCompanyInfo(this.stockSymbol);
-       this.getSimilarStockQuotes(this.stockSymbol);
+       
      })
      
   }
@@ -59,7 +50,6 @@ export class StocksDetailComponent implements OnInit {
     let queryParams = "&types=quote&range=1m&last=20";
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-        console.log("The response is:" , res);
         this.stockQuote = res.quote;
         let {companyName, latestPrice, latestTime, change, changePercent } = res.quote;
         this.stockInfo.companyName = companyName;
@@ -67,10 +57,15 @@ export class StocksDetailComponent implements OnInit {
         this.stockInfo.latestTime = latestTime;
         this.stockInfo.change = change;
         this.stockInfo.changePer = changePercent;
-        console.log(this.stockInfo);
+       
+        this.getStockNews(this.stockSymbol);
+        this.getChartData(this.stockSymbol);
+        this.getCompanyInfo(this.stockSymbol);
+        this.getSimilarStockQuotes(this.stockSymbol);
       }, 
       err => {
         console.log("Error in loading the data");
+        this.route.navigate(['/error' , {message: 'Cannot find Stock Symbol'}]);
       })
 
   }
@@ -78,8 +73,6 @@ export class StocksDetailComponent implements OnInit {
   getSimilarStockQuotes(stockSymbol){
     let similarStocks = this.similarStocks;
     similarStocks.splice( 0, similarStocks.indexOf(this.stockSymbol) + 1);
-    console.log("The similar stocks list: " , similarStocks.join(","));
-    //https://cloud.iexapis.com/beta/stock/market/batch?symbols=aapl,fb&types=quote&token=pk_f4c21a8f6ff14f00bd3230bb3ec066a3
     let url = '/stock/market/batch';
     let queryParams = `&symbols=${similarStocks.join(",")}&types=quote`;
     this.stockService.handleGet(url, queryParams)
@@ -90,7 +83,6 @@ export class StocksDetailComponent implements OnInit {
           let {companyName, symbol, latestPrice, changePercent} = res[stocks[item]].quote;
           similarStcks.push({companyName, symbol, latestPrice, changePercent});
         }
-        console.log("The similarStcks array is:" , similarStcks);
         this.similarStocksInfo = similarStcks;
       }, err => {
         console.log("Error occured");
@@ -102,7 +94,6 @@ export class StocksDetailComponent implements OnInit {
     let queryParams = "&types=news&range=1m&last=5";
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-        console.log("The response is:" , res);
         this.stockNews = res.news;
       }, 
       err => {
@@ -116,7 +107,6 @@ export class StocksDetailComponent implements OnInit {
     let queryParams = "&types=chart&range=1m&last=20";
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-        console.log("The response is:" , res);
         let chartConfig = this.stockService.buildChartData( res.chart,  this.stockSymbol);
         this.stockChartConfig = chartConfig;
         console.log(this.stockChartConfig);
@@ -131,9 +121,7 @@ export class StocksDetailComponent implements OnInit {
     let url = `/stock/${stockSymbol}/company`;
     this.stockService.handleGet(url, '')
       .subscribe(res => {
-          console.log("The company info response is:" , res);
           this.companyInfo = res;
-          
           this.stockCategoryTiles = res.tags;
       }, 
       err => {
@@ -142,16 +130,16 @@ export class StocksDetailComponent implements OnInit {
   }
 
   toggleWatchList(symbol, operation){
-    let watchListItems = window.sessionStorage.getItem('watchList') ? JSON.parse(window.sessionStorage.getItem('watchList')) : [];
-    symbol = symbol.toLowerCase();
-   if(operation === 'add'){
-     this.watchListFlag = true;
-     watchListItems.push(symbol);
-   } else {
-     this.watchListFlag = false;
-     watchListItems.splice(0, watchListItems.indexOf(symbol) + 1);
-     
-   }
-   window.sessionStorage.setItem('watchList', JSON.stringify(watchListItems));
+      let watchListItems = window.sessionStorage.getItem('watchList') ? JSON.parse(window.sessionStorage.getItem('watchList')) : [];
+      symbol = symbol.toLowerCase();
+     if(operation === 'add'){
+       this.watchListFlag = true;
+       watchListItems.push(symbol);
+     } else {
+       this.watchListFlag = false;
+       watchListItems.splice(0, watchListItems.indexOf(symbol) + 1);
+       
+     }
+     window.sessionStorage.setItem('watchList', JSON.stringify(watchListItems));
   }
 }

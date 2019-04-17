@@ -48,7 +48,6 @@ export class StockHomeComponent implements OnInit {
           temp.push({companyName, symbol, latestPrice, changePercent});
         }
         this.watchListEntries = temp;
-        console.log("WatchListEntries:" , this.watchListEntries);
       }, err => {
         console.log("Error occured");
       })
@@ -60,17 +59,14 @@ export class StockHomeComponent implements OnInit {
     let queryParams = `&symbols=${this.markets.join(",")}&types=quote,chart&range=1m&last=5`;
     this.stockService.handleGet(url, queryParams)
       .subscribe(res => {
-         console.log("The resp is:" , res);
          let marketsData = [];
          let temp = [];
          for(let item in this.markets){
            let {quote, chart} = res[this.markets[item]];
            let charts = this.stockService.buildChartData( chart,  quote.symbol);
-           console.log("the charts is:" , charts);
            marketsData.push({quote, charts});
             temp.push({charts});
          }
-         console.log("The final data is:" , marketsData);
          this.marketsQuotesChartData = marketsData;
          
       }, err => {
@@ -82,7 +78,6 @@ export class StockHomeComponent implements OnInit {
     let url = 'https://api.iextrading.com/1.0/stock/market/list/gainers';
     this.stockService.handleGet(url, '', true)
       .subscribe(res => {
-        console.log("The res is:" , res);
         this.marketGainers = this.stockService.parseMultiStockJSON(res);
       }, err => {
         console.log("Error occured");
@@ -93,7 +88,6 @@ export class StockHomeComponent implements OnInit {
     let url = 'https://api.iextrading.com/1.0/stock/market/list/losers';
     this.stockService.handleGet(url, '', true)
       .subscribe(res => {
-        console.log("The res is:" , res);
         this.marketLosers = this.stockService.parseMultiStockJSON(res);
       }, err => {
         console.log("Error occured");
@@ -104,61 +98,10 @@ export class StockHomeComponent implements OnInit {
     this.router.navigate(['/stock', stockSymbol.toLowerCase()]);
   }
 
-
-  buildChartData(data, symbol): object{
-    console.log("Entered");
-    let config = {
-      "xAxis": [
-        {
-          "show": true,
-          "type": "time",
-          "boundaryGap": false
-        }
-      ],
-      "yAxis": [
-        {
-          "show": false,
-          "type": "value",
-          "axisLabel": {
-            "inside": true
-          }
-        }
-      ],
-      "series": [
-        {
-          "name": "",
-          "type": "line",
-          "itemStyle": {
-            "opacity": 0.95,
-            "color": "#007373"
-          },
-          "data": []
-        }
-      ],
-      "tooltip": {
-        "show": true,
-        "trigger": "axis",
-        "showContent": true
-      }
-    };
-    config.series[0].name = symbol;
-    let seriesData = [];
-    for(let idx in data){
-      seriesData.push({
-        name: data[idx].date,
-        value: [new Date(data[idx].date), data[idx].close]
-      })
-    }
-    config.series[0].data = seriesData;
-   
-    return config;
-  }
-
   getSectorsInfo(){
     let url = `/stock/market/sector-performance`;
     this.stockService.handleGet(url, '')
       .subscribe(res => {
-        console.log("The response is:" , res);
         this.sectorsInfo = this.sectorsInfo.concat(res);
       }, err => {
         console.log("The error is:" , err);
