@@ -12,9 +12,9 @@ export class StocksDetailComponent implements OnInit {
   stockSymbol : string;
   companyName: string;
   companyInfo: any;
-  stockQuote: any;
+  stockQuote: any[];
   stockCategoryTiles;
-  stockNews: any = [];
+  stockNews: any[] = [];
   stockChartConfig = {};
   stockInfo: { stockSymbol: string, companyName: string, latestPrice: any , change: any, changePer: any, latestTime: string , companyDescription: string} = {
     stockSymbol: '',
