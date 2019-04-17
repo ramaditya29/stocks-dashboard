@@ -12,7 +12,7 @@ export class StocksService {
 
 
 
-  handleGet(url: string, queryParams?: string, ignoreUrl?: boolean){
+  handleGet(url: string, queryParams?: string, ignoreUrl?: boolean): any{
     let newUrl = '';
     if(ignoreUrl)
       newUrl = `${url}`;
