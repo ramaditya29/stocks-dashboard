@@ -9,8 +9,8 @@ import { Route, Router } from '@angular/router';
 export class StockListingTableComponent implements OnInit, OnChanges {
   @Input() tableData = [];
   columns = [
-    { name: 'companyName',  label: 'Company' , type: 'url' },
-    { name: 'symbol', label: 'Symbol', type: 'text' },
+    { name: 'companyName',  label: 'Company' , type: 'text' },
+    { name: 'symbol', label: 'Symbol', type: 'url' },
     { name: 'latestPrice', label: 'Price', type: 'number'},
     { name: 'changePercent', label: 'Percent Change' , type: 'percent'}
   ];
@@ -28,7 +28,6 @@ export class StockListingTableComponent implements OnInit, OnChanges {
   }
 
   openStockInfo(columnDef, rowValue){
-      console.log("The columnDef:" , columnDef , " and row value is:" , rowValue);
       this.router.navigate(['/stock', rowValue.symbol.toLowerCase()]);
   }
 

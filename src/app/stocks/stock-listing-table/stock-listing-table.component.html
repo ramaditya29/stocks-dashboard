@@ -19,9 +19,9 @@
             <span *ngIf="column.type === 'percent'">
               {{row[column.name] | percent}}
             </span>
-            <a href="javascript:void(0);" (click)="openStockInfo(column, row)" *ngIf="column.type === 'url'">
+            <span class="blue-color" (click)="openStockInfo(column, row)" *ngIf="column.type === 'url'">
               {{row[column.name]}}
-            </a>
+            </span>
 
             <span *ngIf="column.type === 'text'">
               {{row[column.name]}}

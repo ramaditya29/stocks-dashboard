@@ -1,10 +1,15 @@
 <div>
-  <ul style="list-style:none;">
-    <li *ngFor="let d of data">
-      <a href="{{d.url}}">{{d.headline}}</a>
-      <p>Source: {{d.source}}</p>
-      <span>Published on: {{d.datetime}}</span>
-      <img src="{{d.image}}" />
-    </li>
-  </ul>
+  <div *ngFor="let news of data;" class="feed-container-box">
+      <div class="feed-container" >
+        <div>
+          <img src="{{news.image}}" height="140"  width="200">
+        </div>
+        <div class="feed-content">
+            <span class="blue-color font20" (click)="openNewsFeed(news.url)">{{news.headline}}</span>
+            <!--span>{{feed.subTitle}}</span-->
+            <span class="padding8" style="display:block;"><i>Source:</i>{{news.source}}  <span class="float-right">{{news.datetime  | timeAgo}}</span></span>
+            <p>{{news.summary | slice: 0:100}}...</p>
+        </div>
+      </div>
+  </div>
 </div>

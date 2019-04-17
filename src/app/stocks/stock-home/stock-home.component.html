@@ -1,3 +1,103 @@
-<p>
-  stock-home works!
-</p>
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+    <div flex-gt-sm="33" *ngFor="let market of marketsQuotesChartData;let i = index;">
+        <mat-card>
+            <mat-card-title>{{market.quote.latestPrice | currency}}<span class="stock-changeper">{{market.quote.change | currency}}</span> <span class="stock-changeper" >({{market.quote.changePercent }}%)</span></mat-card-title>
+            <mat-card-subtitle>{{market.quote.companyName}} <span class="symbol" (click)="openStockDetailView(market.quote.symbol)">({{ market.quote.symbol}})</span></mat-card-subtitle>
+            <mat-card-subtitle>{{market.quote.latestTime}}</mat-card-subtitle>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <chart [id]="market.quote.symbol" [chartConfig]="market.charts"></chart>
+            </mat-card-content>
+          </mat-card>
+    </div>
+</div>
+<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+    <div flex-gt-sm="60">
+        <mat-card>
+            <mat-card-title>Sector Performance</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <div class="tiles">
+                <div class="tile" *ngFor="let sector of sectorsInfo">
+                  <span class="name">{{sector.name}}</span>
+                  <div class="percent">
+                    <span [ngClass]="{'red-bgb-color' : sector.performance < 0 , 'green-bgb-color': sector.performance >= 0}">{{sector.performance}}%</span>
+                  </div>
+                </div>
+              </div>
+              
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-title>My Posts Feed</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <div *ngFor="let feed of newsFeeds;" class="feed-container-box">
+                <div class="feed-container">
+                  <div>
+                    <img src="{{feed.imageurl}}" height="140"  width="200">
+                  </div>
+                  <div class="feed-content">
+                      <span class="blue-color font20" (click)="openNewsFeed(news.url)">{{feed.title}}</span>
+                      <!--span>{{feed.subTitle}}</span-->
+                      <span class="padding8" style="display:block;"><i>Source:</i>{{feed.source}} <span class="float-right">{{feed.postedDate  | date}}</span></span>
+                      
+                      <!--span><span>Created by:</span>{{feed.author}}</span-->
+                      <p>{{feed.description | slice:0:100}}...</p>
+                  </div>
+                </div>
+                 
+              </div>
+              
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+              <button mat-raised-button color="accent" (click)="addNewPost()">Add New Post</button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
+              <mat-tab-group>
+                  <mat-tab label="Top Gainers">  
+                      <stock-listing-table [tableData]="marketGainers | slice:0:10"></stock-listing-table>
+                  </mat-tab>
+                  <mat-tab label="Top Losers"> 
+                      <stock-listing-table [tableData]="marketLosers | slice:0:10"></stock-listing-table>  
+                  </mat-tab>
+              </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+    </div>
+    <div flex-gt-sm="40">
+        <div layout-gt-sm="row">
+            <div flex-gt-sm="50">
+                <mat-card>
+                    <mat-card-title>Bull of the Day</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                      <h3 class="blue-color" (click)="openStockDetailView('KSS')">Kohl's Corporation(KSS)</h3>
+                      <p>Innovative strategies are keeping this retailer out front, even in an increasingly digital environment</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div flex-gt-sm="50">
+                <mat-card>
+                    <mat-card-title>Bear of the Day</mat-card-title>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                      <h3 class="blue-color" (click)="openStockDetailView('SHOP')">Shopify</h3>
+                      <p>Despite a novel approach to making e-tailing accessible to small players, recent ...</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div> 
+        <mat-card>
+            <mat-card-title>My Watch List</mat-card-title>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <stock-listing-table [tableData]="watchListEntries | slice:0:10"></stock-listing-table>
+            </mat-card-content>
+          </mat-card>
+        
+    </div>
+</div>
