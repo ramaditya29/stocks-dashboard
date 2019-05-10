@@ -7,7 +7,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 })
 export class CompanyInfoComponent implements OnInit, OnChanges {
   @Input() companySummary;
-  companyData = {};
+  companyData: any = {};
   
   constructor() { }
 
